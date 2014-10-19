@@ -1,0 +1,32 @@
+---
+- name: Install php-fpm and deps
+  sudo: true
+  yum: 
+    name={{ item }} 
+    enablerepo=remi,epel
+    state=present
+  with_items:
+    - php
+    - php-cli
+    - php-pdo
+    - php-intl
+  tags: php_install
+
+- name: Set memory limit
+  sudo: true
+  lineinfile: dest=/etc/php.ini regexp="^memory_limit.*=" line="memory_limit = 256M"
+  notify: restart php-fpm
+  tags: php_config
+
+- name: Set the correct timezone
+  sudo: true
+  lineinfile: dest=/etc/php.ini regexp="date.timezone = " line="date.timezone = Europe/London"
+  notify: restart php-fpm
+  tags: php_config
+
+- name: Copy php-fpm configuration
+  sudo: true
+  template: src=swb.conf dest=/etc/php-fpm.d/swb.conf
+  notify: restart php-fpm
+  tags: php_config
+

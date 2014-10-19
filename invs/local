@@ -1,0 +1,5 @@
+[web]
+10.0.10.10 server_hostname=web.swb.dev public_root=/opt/BoxUK/swb-webapp/web ssh_user=vagrant ssh_group=vagrant ansible_ssh_private_key_file=/Users/lloyd/.vagrant.d/insecure_private_key remote_user=vagrant user=vagrant
+
+[db]
+10.0.10.11 server_hostname=db.swb.dev ssh_user=vagrant ssh_group=vagrant ansible_ssh_private_key_file=/Users/lloyd/.vagrant.d/insecure_private_key remote_user=vagrant user=vagrant

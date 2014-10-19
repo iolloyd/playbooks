@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    region: sa-east-1
+    allowed_ip: 92.8.75.55/32
+
+  tasks:
+    - name: EC2 basic provisioning 
+      local_action:
+        module: ec2
+        region: "{{ region }}"
+        key_name: iolloyd-test-ami
+        instance_type: t1.micro
+        image: ami-956cc688 
+        wait: yes
+        group: launch-wizard-1
+        
+

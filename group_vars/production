@@ -1,0 +1,6 @@
+---
+
+ssh_user: nginx 
+ssh_group: nginx 
+app_root: /opt/BoxUK/swb-webapp/web
+

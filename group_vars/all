@@ -1,0 +1,6 @@
+---
+
+mysql_port: 3306
+server_hostname: swb.dev
+app_root: "/var/www/html/site"
+public_root: "/var/www/html/site/web"

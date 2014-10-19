@@ -1,0 +1,19 @@
+---
+- name: Install Mysql package
+  yum: name={{ item }} state=present
+  with_items:
+   - mysql-server
+   - MySQL-python
+   - libselinux-python
+   - libsemanage-python
+  sudo: true
+
+- name: Create Mysql configuration file
+  template: src=my.cnf.j2 dest=/etc/my.cnf
+  notify: 
+    - restart mysql
+  sudo: true
+
+- name: Start Mysql Service
+  service: name=mysqld state=started enabled=true
+  sudo: true
