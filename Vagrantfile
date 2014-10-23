@@ -14,7 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     app.vm.host_name = "web.swb.dev"
     app.vm.box = "centos"
     app.vm.network :private_network, ip: "10.0.10.10"
-    app.vm.synced_folder "./swb", "/opt/BoxUK/swb-webapp", 
+    app.vm.synced_folder "../swb", "/var/www/swb-webapp", 
       type: "nfs"
   end
 
@@ -31,7 +31,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provisioning/main.yml"
+    ansible.playbook = "main.yml"
     ansible.sudo = true
   end
 

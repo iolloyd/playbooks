@@ -1,19 +1,30 @@
 ---
 - name: Install Mysql package
   yum: name={{ item }} state=present
+  sudo: true
   with_items:
    - mysql-server
    - MySQL-python
    - libselinux-python
    - libsemanage-python
+   - iptables
+
+- name: Set IP tables to allow web to connect to mysql
   sudo: true
+  command: sudo iptables -A INPUT -p tcp -s 10.0.10.10 --sport 1024:65535 -d 10.0.10.10 --dport 3306 -m state --state NEW,ESTABLISHED -j ACCEPT
+
+- name: Set IP tables to allow web to connect to mysql
+  sudo: true
+  command: sudo iptables -A OUTPUT -p tcp -s 10.0.10.10 --sport 3306 -d 10.0.10.10 --dport 1024:65535 -m state --state ESTABLISHED -j ACCEPT
 
 - name: Create Mysql configuration file
   template: src=my.cnf.j2 dest=/etc/my.cnf
-  notify: 
-    - restart mysql
   sudo: true
+  notify: 
+    - Restart mysql
 
 - name: Start Mysql Service
-  service: name=mysqld state=started enabled=true
   sudo: true
+  service: name=mysqld state=started enabled=true
+
+

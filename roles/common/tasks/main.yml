@@ -1,17 +1,18 @@
 ---
 - name: Add epel repo
+  sudo: true
   yum: 
     name=http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
     state=present
-  sudo: true
 
 - name: Add remi repo
+  sudo: true
   yum:
     name=http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
     state=present
-  sudo: true
     
 - name: enable remi and epel repos
+  sudo: true
   ini_file: 
     dest=/etc/yum.repos.d/{{ item }}.repo
     section={{ item }}
@@ -20,13 +21,13 @@
   with_items:
     - epel
     - remi
-  sudo: true
 
 - name: Install libselinux-python
-  yum: name=libselinux-python state=present
   sudo: true
+  yum: name=libselinux-python state=present
 
 - name: Create the GPG key for EPEL
+  sudo: true
   copy: src=RPM-GPG-KEY-EPEL-6 dest=/etc/pki/rpm-gpg
 
 #- name: Set up iptables rules
